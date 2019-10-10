@@ -4,14 +4,15 @@ import { AppState } from '../../redux/store';
 import { loadUsers } from '../../redux/users/actions';
 import { User as UserTypes, UserState } from '../../redux/users/types';
 import User from '../User';
+import NoUsers from '../NoUsers';
 
 interface Props {
   users: UserState;
-  loadUsers: Function;
+  loadUsers: () => Promise<void>;
 }
 
 class UserList extends React.Component<Props> {
-  public componentWillMount() {
+  public componentDidMount() {
     // this will call the axios request to populate the component with userList
     this.props.loadUsers();
   }
@@ -27,7 +28,8 @@ class UserList extends React.Component<Props> {
   };
 
   public render() {
-    return (
+    // check for to see if there are users
+    return this.props.users.userList.length > 0 ? (
       <section className="cf bg-white shadow br3 mb5">
         <div className="pv4 ph3">
           <h1 className="f3 fw6 dib">Users</h1>
@@ -47,12 +49,14 @@ class UserList extends React.Component<Props> {
                 </th>
               </tr>
             </thead>
-            {this.props.users
-              ? this.displayUsers(this.props.users.userList)
-              : null}
+
+            <tbody>{this.displayUsers(this.props.users.userList)}</tbody>
           </table>
         </div>
       </section>
+    ) : (
+      // if no users render:
+      <NoUsers />
     );
   }
 }

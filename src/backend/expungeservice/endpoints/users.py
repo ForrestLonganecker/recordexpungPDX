@@ -34,9 +34,11 @@ class Users(MethodView):
 
             response_data = {
                 "user_id": user_db_data["user_id"],
+                # "id": user_db_data["user_id"],
                 "email": user_db_data["email"],
                 "name": user_db_data["name"],
                 "group_name": user_db_data["group_name"],
+                # "group": user_db_data["group_name"],
                 "admin": user_db_data["admin"],
                 "timestamp": user_db_data["date_created"]}
             return jsonify(response_data), 201
@@ -52,9 +54,11 @@ class Users(MethodView):
             for user_entry in user_db_data:
                 response_data["users"].append({
                     "user_id": user_entry["user_id"],
+                    # "id": user_entry["user_id"],
                     "email": user_entry["email"],
                     "name": user_entry["name"],
                     "group_name": user_entry["group_name"],
+                    # "group": user_entry["group_name"],
                     "admin": user_entry["admin"],
                     "timestamp": user_entry["date_created"]
                     })

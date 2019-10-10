@@ -1,47 +1,24 @@
 import { Dispatch } from 'redux';
-import { LOAD_USERS, User } from './types';
+import { LOAD_USERS } from './types';
+import apiService from '../../service/api-service';
+import { convertUserArray } from '../../service/user-service';
 
-export const loadUsers = () => (dispatch: Dispatch) => {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      // placeholderUserData will be replaced with the payload from the axios request
-      const users: User[] = placeholderUserData;
-      dispatch({
-        type: LOAD_USERS,
-        users
+export const loadUsers = () => {
+  return (dispatch: Dispatch) => {
+    return apiService(dispatch, {
+      url: '/api/users',
+      method: 'get',
+      authenticated: true
+    })
+      .then((response: any) => {
+        dispatch({
+          type: LOAD_USERS,
+          // users: response.data.users
+          users: convertUserArray(response.data.users)
+        });
+      })
+      .catch((error: any) => {
+        console.log(error);
       });
-    }, 1000);
-  });
+  };
 };
-
-// Data for loadUsers action to populate the store with user data
-const placeholderUserData: User[] = [
-  {
-    email: 'jane@email.com',
-    group: 'Metropolitan Public Defender',
-    id: 1,
-    name: 'Jane Dolby',
-    role: 'Search'
-  },
-  {
-    email: 'michael@email.com',
-    group: 'Metropolitan Public Defender',
-    id: 2,
-    name: 'Michael Zhang',
-    role: 'Admin'
-  },
-  {
-    email: 'melissa@email.com',
-    group: 'Royce, Jennings & Coldwater',
-    id: 3,
-    name: 'Melissa Jennings',
-    role: 'Search'
-  },
-  {
-    email: 'terri@email.com',
-    group: 'Royce, Jennings & Coldwater',
-    id: 4,
-    name: 'Terri Royce',
-    role: 'Search'
-  }
-];

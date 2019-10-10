@@ -10,11 +10,13 @@ class User extends React.Component<Props> {
     return (
       <tr>
         <td className="pa3 bb b--black-20">
-          <a href="#" className="underline">
+          <a href="/admin" className="underline">
             {this.props.user.name}
           </a>
         </td>
-        <td className="pa3 bb b--black-20">{this.props.user.role}</td>
+        <td className="pa3 bb b--black-20">
+          {this.props.user.admin ? 'Admin' : 'Search'}
+        </td>
         <td className="pa3 bb b--black-20">{this.props.user.group}</td>
       </tr>
     );
