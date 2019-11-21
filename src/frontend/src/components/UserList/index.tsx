@@ -4,20 +4,42 @@ import { AppState } from '../../redux/store';
 import { loadUsers } from '../../redux/users/actions';
 import { User as UserTypes, UserState } from '../../redux/users/types';
 import User from '../User';
-import NoUsers from '../NoUsers';
+import LoadingSpinner from '../LoadingSpinner';
+import NotAuthorized from '../NotAuthorized';
 
 interface Props {
   users: UserState;
   loadUsers: () => Promise<void>;
 }
 
+interface State {
+  loading: boolean;
+}
+
 class UserList extends React.Component<Props> {
-  public componentDidMount() {
+  state: State = {
+    loading: true
+  };
+  componentDidMount() {
     // this will call the axios request to populate the component with userList
-    this.props.loadUsers();
+    this.props.loadUsers().catch(error => {
+      console.log(error.response.status);
+      if (error.response.status === 403) {
+        this.setState({ loading: false });
+      } else {
+      }
+    });
   }
 
-  public displayUsers = (inputUsers: UserTypes[]) => {
+  displayNoUsers = () => {
+    return this.state.loading ? (
+      <LoadingSpinner inputString={'Users'} />
+    ) : (
+      <NotAuthorized />
+    );
+  };
+
+  displayUsers = (inputUsers: UserTypes[]) => {
     if (inputUsers) {
       const returnList = inputUsers.map(user => {
         return <User key={user.id} user={user} />;
@@ -27,8 +49,7 @@ class UserList extends React.Component<Props> {
     }
   };
 
-  public render() {
-    // check for to see if there are users
+  render() {
     return this.props.users.userList.length > 0 ? (
       <section className="cf bg-white shadow br3 mb5">
         <div className="pv4 ph3">
@@ -55,8 +76,7 @@ class UserList extends React.Component<Props> {
         </div>
       </section>
     ) : (
-      // if no users render:
-      <NoUsers />
+      this.displayNoUsers()
     );
   }
 }

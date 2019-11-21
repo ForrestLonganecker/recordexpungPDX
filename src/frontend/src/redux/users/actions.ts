@@ -7,18 +7,16 @@ export const loadUsers = () => {
   return (dispatch: Dispatch) => {
     return apiService(dispatch, {
       url: '/api/users',
-      method: 'get',
-      authenticated: true
-    })
-      .then((response: any) => {
-        dispatch({
-          type: LOAD_USERS,
-          // users: response.data.users
-          users: convertUserArray(response.data.users)
-        });
-      })
-      .catch((error: any) => {
-        console.log(error);
+      method: 'get'
+    }).then((response: any) => {
+      dispatch({
+        type: LOAD_USERS,
+        // users: response.data.users
+        users: convertUserArray(response.data.users)
       });
+    });
+    // .catch((error: any) => {
+    //   console.log(error);
+    // });
   };
 };

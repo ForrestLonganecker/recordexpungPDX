@@ -18,6 +18,18 @@ class User extends React.Component<Props> {
           {this.props.user.admin ? 'Admin' : 'Search'}
         </td>
         <td className="pa3 bb b--black-20">{this.props.user.group}</td>
+        <button
+          aria-label="edit group"
+          className="navy hover-dark-blue bb b--black-20 pa3"
+        >
+          <i aria-hidden="true" className="fa fa-pen pr3"></i>
+        </button>
+        <button
+          aria-label="delete group"
+          className="navy hover-dark-blue bb b--black-20 pa3"
+        >
+          <i aria-hidden="true" className="fa fa-trash"></i>
+        </button>
       </tr>
     );
   }
