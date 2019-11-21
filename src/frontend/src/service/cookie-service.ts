@@ -21,13 +21,11 @@ export function decodeCookie() {
     }, {});
 }
 
-export function setCookie(inputToken: string, inputId: string) {
-  // 'max-age' is set to 1 hour
-  document.cookie = `authToken=${inputToken}; max-age=36000;`;
-  document.cookie = `userId=${inputId}; max-age=36000;`;
+export function removeCookie() {
+  document.cookie = 'remember_token=; max-age=0;';
+  document.cookie = 'oeci_token=; max-age=0;';
 }
 
-export function removeCookie() {
-  document.cookie = 'authToken=; max-age=0;';
-  document.cookie = 'userId=; max-age=0;';
+export function hasOeciToken() {
+  return decodeCookie().oeci_token ? true : false;
 }

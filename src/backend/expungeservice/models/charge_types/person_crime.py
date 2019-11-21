@@ -1,13 +1,11 @@
-from expungeservice.models.charge_types.base_charge import BaseCharge
+from expungeservice.models.charge_types.charge import Charge
+from expungeservice.models.expungement_result import TypeEligibility, EligibilityStatus
 
 
-class PersonCrime(BaseCharge):
+class PersonCrime(Charge):
 
-    def __init__(self, **kwargs):
-        super(PersonCrime, self).__init__(**kwargs)
+    def _default_type_eligibility(self):
         if self.acquitted():
-            self.expungement_result.set_type_eligibility(True)
-            self.expungement_result.set_reason('Eligible under 137.225(1)(b)')
+            return TypeEligibility(EligibilityStatus.ELIGIBLE, reason='Eligible under 137.225(1)(b)')
         else:
-            self.expungement_result.set_type_eligibility(False)
-            self.expungement_result.set_reason('Ineligible under 137.225(5)')
+            return TypeEligibility(EligibilityStatus.INELIGIBLE, reason='Ineligible under 137.225(5)')

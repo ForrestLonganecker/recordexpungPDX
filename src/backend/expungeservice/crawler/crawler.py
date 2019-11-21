@@ -1,6 +1,6 @@
 import requests
 
-from expungeservice.models.charge import Charge
+from expungeservice.models.charge_creator import ChargeCreator
 from expungeservice.models.disposition import Disposition
 from expungeservice.models.record import Record
 from expungeservice.crawler.parsers.param_parser import ParamParser
@@ -14,7 +14,7 @@ class Crawler:
 
     def __init__(self):
         self.session = requests.Session()
-        self.response = requests.Response
+        self.response = requests.Response()
         self.result = RecordParser()
 
     def login(self, username, password, close_session=False):
@@ -40,6 +40,7 @@ class Crawler:
         # Parse search results (case detail pages)
         for case in self.result.cases:
             case_parser = self.__parse_case(case)
+            case.set_probation_revoked(case_parser.probation_revoked)
             case.set_balance_due(case_parser.balance_due)
             for charge_id, charge in case_parser.hashed_charge_data.items():
                 charge['case'] = case
@@ -76,4 +77,4 @@ class Crawler:
         if case_parser.hashed_dispo_data.get(charge_id):
             charge['disposition'] = Disposition(case_parser.hashed_dispo_data[charge_id].get('date'),
                                                 case_parser.hashed_dispo_data[charge_id].get('ruling'))
-        return Charge.create(**charge)
+        return ChargeCreator.create(**charge)

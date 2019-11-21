@@ -1,0 +1,28 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+flask = "*"
+"psycopg2" = "*"
+flask-script = "*"
+flask-bcrypt = "*"
+pyjwt = "*"
+python-dotenv = "*"
+recordexpunge = {editable = true,path = "."}
+expungeservice = {editable = true,path = "."}
+pytest = "*"
+requests-mock = "*"
+requests = "*"
+python-dateutil = "*"
+uwsgi = "*"
+cryptography = "*"
+flask-login = "==0.4.1"
+dacite = "==1.0.2"
+mypy = "==0.740"
+
+[dev-packages]
+
+[requires]
+python_version = "3.7"
