@@ -15,8 +15,5 @@ export const loadUsers = () => {
         users: convertUserArray(response.data.users)
       });
     });
-    // .catch((error: any) => {
-    //   console.log(error);
-    // });
   };
 };

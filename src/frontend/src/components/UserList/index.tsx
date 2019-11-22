@@ -6,6 +6,7 @@ import { User as UserTypes, UserState } from '../../redux/users/types';
 import User from '../User';
 import LoadingSpinner from '../LoadingSpinner';
 import NotAuthorized from '../NotAuthorized';
+import TechnicalDifficulties from '../TechnicalDifficulties';
 
 interface Props {
   users: UserState;
@@ -13,40 +14,42 @@ interface Props {
 }
 
 interface State {
-  loading: boolean;
+  errorType: string;
 }
 
 class UserList extends React.Component<Props> {
   state: State = {
-    loading: true
+    errorType: 'none'
   };
   componentDidMount() {
     // this will call the axios request to populate the component with userList
     this.props.loadUsers().catch(error => {
-      console.log(error.response.status);
       if (error.response.status === 403) {
-        this.setState({ loading: false });
+        // error if user is not admin
+        this.setState({ errorType: 'unauthorized' });
       } else {
+        // need to create logic for technical difficulties
+        this.setState({ errorType: 'technical' });
       }
     });
   }
 
   displayNoUsers = () => {
-    return this.state.loading ? (
+    return this.state.errorType === 'none' ? (
       <LoadingSpinner inputString={'Users'} />
-    ) : (
+    ) : this.state.errorType === 'unauthorized' ? (
       <NotAuthorized />
+    ) : (
+      <TechnicalDifficulties />
     );
   };
 
-  displayUsers = (inputUsers: UserTypes[]) => {
-    if (inputUsers) {
-      const returnList = inputUsers.map(user => {
-        return <User key={user.id} user={user} />;
-      });
+  displayUsers = () => {
+    const returnList = this.props.users.userList.map(user => {
+      return <User key={user.id} user={user} />;
+    });
 
-      return returnList;
-    }
+    return returnList;
   };
 
   render() {
@@ -60,16 +63,16 @@ class UserList extends React.Component<Props> {
         </div>
 
         <div className="overflow-auto">
-          <table className="f6 w-100 mw8 center" data-cellspacing="0">
-            <thead>
+          <table className="f6 w-100 mw8 center collapse">
+            <thead className="bb b--black-10">
               <tr>
-                <th className="fw6 bb b--black-20 tl pb3 ph3 bg-white">Name</th>
-                <th className="fw6 bb b--black-20 tl pb3 ph3 bg-white">Role</th>
-                <th className="fw6 bb b--black-20 tl pb3 ph3 bg-white">Group</th>
+                <th className="fw6 tl pb3 ph3 bg-white">Name</th>
+                <th className="fw6 tl pb3 ph3 bg-white">Role</th>
+                <th className="fw6 tl pb3 ph3 bg-white">Group</th>
               </tr>
             </thead>
 
-            <tbody>{this.displayUsers(this.props.users.userList)}</tbody>
+            <tbody>{this.displayUsers()}</tbody>
           </table>
         </div>
       </section>
