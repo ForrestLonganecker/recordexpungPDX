@@ -21,13 +21,13 @@ class User extends React.Component<Props> {
             aria-label={`edit user: ${this.props.user.name}`}
             className="navy hover-dark-blue"
           >
-            <i aria-hidden="true" className="fa fa-pen pr3"></i>
+            <i aria-hidden="true" className="fa fa-pen pr3" />
           </button>
           <button
             aria-label={`delete user: ${this.props.user.name}`}
             className="navy hover-dark-blue"
           >
-            <i aria-hidden="true" className="fa fa-trash"></i>
+            <i aria-hidden="true" className="fa fa-trash" />
           </button>
         </td>
       </tr>

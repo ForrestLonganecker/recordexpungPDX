@@ -28,7 +28,6 @@ class UserList extends React.Component<Props> {
         // error if user is not admin
         this.setState({ errorType: 'unauthorized' });
       } else {
-        // need to create logic for technical difficulties
         this.setState({ errorType: 'technical' });
       }
     });
@@ -64,7 +63,7 @@ class UserList extends React.Component<Props> {
 
         <div className="overflow-auto">
           <table className="f6 w-100 mw8 center collapse">
-            <thead className="bb b--black-10">
+            <thead className="bb b--black-20">
               <tr>
                 <th className="fw6 tl pb3 ph3 bg-white">Name</th>
                 <th className="fw6 tl pb3 ph3 bg-white">Role</th>
@@ -72,7 +71,7 @@ class UserList extends React.Component<Props> {
               </tr>
             </thead>
 
-            <tbody>{this.displayUsers()}</tbody>
+            <tbody className="lh-copy">{this.displayUsers()}</tbody>
           </table>
         </div>
       </section>

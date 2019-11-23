@@ -13,7 +13,7 @@ class AllStatus extends React.Component<Props> {
     return (
       <section>
         {this.props.loading ? (
-          <LoadingSpinner inputString={'your search results...'} />
+          <LoadingSpinner inputString={'your search results'} />
         ) : (
           <NoSearchResults />
         )}
