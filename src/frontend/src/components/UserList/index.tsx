@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { loadUsers } from '../../redux/users/actions';
-import { User as UserTypes, UserState } from '../../redux/users/types';
+import { UserState } from '../../redux/users/types';
 import User from '../User';
 import LoadingSpinner from '../LoadingSpinner';
 import NotAuthorized from '../NotAuthorized';
