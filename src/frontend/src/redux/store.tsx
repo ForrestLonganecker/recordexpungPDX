@@ -9,12 +9,14 @@ import { usersReducer } from './users/reducer';
 import { recordsReducer } from './records/reducer';
 import { systemReducer } from './system/reducer';
 import { groupsReducer } from './groups/reducer';
+import { errorReducer } from './errors/reducer';
 
 const rootReducer = combineReducers({
   system: systemReducer,
   records: recordsReducer,
   users: usersReducer,
-  groups: groupsReducer
+  groups: groupsReducer,
+  errors: errorReducer
 });
 
 const store = configureStore({

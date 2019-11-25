@@ -7,39 +7,32 @@ import User from '../User';
 import LoadingSpinner from '../LoadingSpinner';
 import NotAuthorized from '../NotAuthorized';
 import TechnicalDifficulties from '../TechnicalDifficulties';
+import Error from '../Error';
 
 interface Props {
   users: UserState;
   loadUsers: () => Promise<void>;
 }
 
-interface State {
-  errorType: string;
-}
-
 class UserList extends React.Component<Props> {
-  state: State = {
-    errorType: 'none'
-  };
   componentDidMount() {
     // this will call the axios request to populate the component with userList
-    this.props.loadUsers().catch(error => {
-      if (error.response.status === 403) {
-        // error if user is not admin
-        this.setState({ errorType: 'unauthorized' });
-      } else {
-        this.setState({ errorType: 'technical' });
-      }
-    });
+    // this.props.loadUsers().catch(error => {
+    //   if (error.response.status === 403) {
+    //     // error if user is not admin
+    //     this.setState({ errorType: 'unauthorized' });
+    //   } else {
+    //     this.setState({ errorType: 'technical' });
+    //   }
+    // });
+    this.props.loadUsers();
   }
 
   displayNoUsers = () => {
-    return this.state.errorType === 'none' ? (
+    return this.props.users.loading ? (
       <LoadingSpinner inputString={'Users'} />
-    ) : this.state.errorType === 'unauthorized' ? (
-      <NotAuthorized />
     ) : (
-      <TechnicalDifficulties />
+      <Error />
     );
   };
 
