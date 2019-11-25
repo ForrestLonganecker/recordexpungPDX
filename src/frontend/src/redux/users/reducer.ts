@@ -1,13 +1,7 @@
-import {
-  FINISH_LOADING,
-  LOAD_USERS,
-  UserActionTypes,
-  UserState
-} from './types';
+import { LOAD_USERS, UserActionTypes, UserState } from './types';
 
 const initialState: UserState = {
-  userList: [],
-  loading: true
+  userList: []
 };
 
 export function usersReducer(
@@ -17,13 +11,7 @@ export function usersReducer(
   switch (action.type) {
     case LOAD_USERS:
       return {
-        userList: action.users,
-        loading: action.loading
-      };
-    case FINISH_LOADING:
-      return {
-        userList: [],
-        loading: action.loading
+        userList: action.users
       };
     default:
       return state;
