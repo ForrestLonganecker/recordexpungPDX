@@ -92,7 +92,7 @@ class UserList extends React.Component<Props> {
 
 const mapStateToProps = (state: AppState) => ({
   users: state.users
-})
+});
 
 export default connect(
   mapStateToProps,
