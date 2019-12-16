@@ -1,4 +1,5 @@
 import React from 'react';
+import history from '../../service/history';
 import { connect } from 'react-redux';
 import { AppState } from '../../redux/store';
 import { loadUsers, clearUsers } from '../../redux/users/actions';
@@ -80,17 +81,18 @@ class UserList extends React.Component<Props> {
       </div>
     </section>
   );
-
-  render() {
-    return this.props.users.userList.length > 0
+  public render() {
+    return (
+    this.props.users.userList.length > 0
       ? this.displayUsers()
-      : this.displayNoUsers();
+      : this.displayNoUsers()
+      )
   }
 }
 
 const mapStateToProps = (state: AppState) => ({
   users: state.users
-});
+})
 
 export default connect(
   mapStateToProps,
