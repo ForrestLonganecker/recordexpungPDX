@@ -61,7 +61,10 @@ class UserList extends React.Component<Props> {
     <section className="cf bg-white shadow br3 mb5">
       <div className="pv4 ph3">
         <h1 className="f3 fw6 dib">Users</h1>
-        <button className="bg-navy white bg-animate hover-bg-dark-blue fw6 br2 pv2 ph3 fr">
+        <button
+          className="bg-navy white bg-animate hover-bg-dark-blue fw6 br2 pv2 ph3 fr"
+          onClick={() => history.push('/add-user')}
+        >
           New User
         </button>
       </div>
@@ -82,11 +85,9 @@ class UserList extends React.Component<Props> {
     </section>
   );
   public render() {
-    return (
-    this.props.users.userList.length > 0
+    return this.props.users.userList.length > 0
       ? this.displayUsers()
-      : this.displayNoUsers()
-      )
+      : this.displayNoUsers();
   }
 }
 
